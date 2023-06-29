@@ -1,6 +1,12 @@
-import { ApiProperty, OmitType } from "@nestjs/swagger";
-import { Type } from "class-transformer";
-import { IsArray, IsInt, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import {
+  IsArray,
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+} from 'class-validator';
 
 export class CourseDTO {
   @ApiProperty()
@@ -23,7 +29,7 @@ export class CourseDTO {
   @ApiProperty()
   @IsNotEmpty()
   @IsArray()
-  @IsString({each: true})
+  @IsString({ each: true })
   tags: string[];
 }
 

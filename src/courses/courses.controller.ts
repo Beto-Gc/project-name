@@ -1,10 +1,24 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Res,
+} from '@nestjs/common';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { response } from 'express';
 import { CoursesService } from './courses.service';
+import { CourseDTO, CreateCourseDTO, UpdateCourseDTO } from './dto/course.dto';
 
 @Controller('courses')
+@ApiTags('Courses')
 export class CoursesController {
-  constructor(private readonly coursesService: CoursesService){}
+  constructor(private readonly coursesService: CoursesService) {}
   @Get()
   findAll() {
     return this.coursesService.findAll();
@@ -13,16 +27,26 @@ export class CoursesController {
   findOne(@Param('id') id: string) {
     return this.coursesService.findOne(id);
   }
+
   @Post()
-  create(@Body() body) {
+  @ApiCreatedResponse({ type: CourseDTO })
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body() body: CreateCourseDTO) {
     return this.coursesService.create(body);
   }
+
   @Patch(':id')
-  update(@Param('id')id: string, @Body('name') body) {
-    return this.coursesService.update(id, body);
+  @ApiCreatedResponse({ type: CourseDTO })
+  @HttpCode(HttpStatus.OK)
+  update(
+    @Param('id') id: string,
+    @Body('name') updateCourseDTO: UpdateCourseDTO,
+  ) {
+    return this.coursesService.update(id, updateCourseDTO);
   }
+
   @Delete(':id')
-  delete(@Param('id')id: string) {
-    return  this.coursesService.delete(id);
+  delete(@Param('id') id: string) {
+    return this.coursesService.delete(id);
   }
 }

@@ -3,6 +3,9 @@ import { Course } from './entities/course.entity';
 
 @Injectable()
 export class CoursesService {
+  delete(id: string) {
+    throw new Error('Method not implemented.');
+  }
     private courses: Course[] = [
         {
             id:1,

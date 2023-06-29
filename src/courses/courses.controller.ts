@@ -3,18 +3,14 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
-  HttpStatus,
   Param,
   Patch,
   Post,
-  Res,
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { response } from 'express';
+import { ApiTags } from '@nestjs/swagger';
 import { CoursesService } from './courses.service';
-import { CourseDTO, CreateCourseDTO, UpdateCourseDTO } from './dto/course.dto';
-
+import { CreateCourseDTO } from './dto/create-course.dto';
+import { UpdateCourseDTO } from './dto/update-course.dto';
 @Controller('courses')
 @ApiTags('Courses')
 export class CoursesController {
@@ -29,15 +25,11 @@ export class CoursesController {
   }
 
   @Post()
-  @ApiCreatedResponse({ type: CourseDTO })
-  @HttpCode(HttpStatus.CREATED)
-  create(@Body() body: CreateCourseDTO) {
-    return this.coursesService.create(body);
+  create(@Body() createCourseDTO: CreateCourseDTO) {
+    return this.coursesService.create(createCourseDTO);
   }
 
   @Patch(':id')
-  @ApiCreatedResponse({ type: CourseDTO })
-  @HttpCode(HttpStatus.OK)
   update(
     @Param('id') id: string,
     @Body('name') updateCourseDTO: UpdateCourseDTO,
